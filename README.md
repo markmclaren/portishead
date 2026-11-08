@@ -1,6 +1,6 @@
 # Portishead Walks & Locations Map
 
-An interactive, responsive web map centred on **17 Avon Way, Portishead, BS20 6JJ**, highlighting circular walks, points of interest, supermarkets, and local amenities.
+An interactive, responsive web map centred on Portishead, highlighting circular walks, points of interest, supermarkets, and local amenities.
 
 Live demo: **[https://markmclaren.github.io/portishead/](https://markmclaren.github.io/portishead/)**
 
@@ -8,7 +8,7 @@ Live demo: **[https://markmclaren.github.io/portishead/](https://markmclaren.git
 
 ## Features
 
-- **5 Curated Circular Walks** starting and ending at 17 Avon Way, with distance, estimated walking duration, directional path arrows, and route highlights.
+- **5 Curated Circular Walks** with distance, estimated walking duration, directional path arrows, and route highlights.
 - **Points of Interest & Landmarks:** Victorian Lake Grounds, Battery Point Lighthouse, Eastwood Local Nature Reserve, Portishead Quays Marina, Portishead Marina Lock, Portishead Pier, SeaRock Fish & Chips, Mokoko Coffee & Bakery, Fisherman's Steps, and Portbury Wharf Nature Reserve.
 - **Local Amenities:** Supermarkets (Waitrose, Sainsbury's, Lidl, Aldi, Tesco Express, Co-op, etc.) and Medical facilities (GP, Pharmacies, Dentist, Vet, Clevedon Minor Injury Unit).
 - **Interactive Controls:** Toggle walks and POI layers, interactive popups with full descriptions, home recentring, and GPS geolocation tracking (`trackUserLocation`).
@@ -62,3 +62,4 @@ To host this map via GitHub Pages:
 2. Under **Build and deployment > Source**, select **Deploy from a branch**.
 3. Choose branch **`main`** and folder **`/ (root)`**, then click **Save**.
 4. The site will be live at `https://<username>.github.io/portishead/`.
+
