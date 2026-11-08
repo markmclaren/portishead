@@ -1,0 +1,18 @@
+{
+  "type": "FeatureCollection",
+  "name": "Portishead Home",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "17 Avon Way (Home)",
+        "description": "Portishead BS20 6JJ<br>Free layby parking in front; extra parking around the corner."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7734584, 51.4845699]
+      }
+    }
+  ]
+}
+

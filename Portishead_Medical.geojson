@@ -1,0 +1,51 @@
+{
+  "type": "FeatureCollection",
+  "name": "Portishead Medical, Dental & Vet",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Portishead Medical Group & Jhoots Pharmacy",
+        "description": "Victoria Square, Portishead BS20 6AQ.<br>Doctor: 01275 841630<br>Jhoots Pharmacy (inside): 01275 844697"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7659415, 51.4830116]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Woodburn Cottage Dental Practice",
+        "description": "93 High Street, Portishead BS20 6PR.<br>Phone: 01275 842058"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7680024, 51.4809664]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Vets4Pets Portishead (inside Pets at Home)",
+        "description": "Unit 4 Wyndham Retail Park, Old Mill Road, Portishead BS20 7BX.<br>Phone: 01275 815470"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7666017, 51.4854619]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Clevedon Cottage Hospital (Minor Injury Unit)",
+        "description": "Old St, Clevedon BS21 6BS (~15 mins drive).<br>Phone: 01275 872212"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.8469838, 51.4376051]
+      }
+    }
+  ]
+}
+

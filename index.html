@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Portishead Map — 17 Avon Way</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='11' fill='%231d3557'/><path d='M12 5l7 6h-2v6h-4v-4h-2v4H7v-6H5l7-6z' fill='%23ffffff'/></svg>"
+    />
+    <link
+      href="https://unpkg.com/maplibre-gl@^5.2.0/dist/maplibre-gl.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+      .menu-toggle {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 3;
+        background: #007bff;
+        color: #ffffff;
+        padding: 8px 12px;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        font-size: 22px;
+        line-height: 1;
+        user-select: none;
+      }
+      .menu-toggle:hover {
+        background: #0062cc;
+      }
+      .menu {
+        position: absolute;
+        background: #ffffff;
+        padding: 12px;
+        top: 54px;
+        right: 10px;
+        z-index: 2;
+        border-radius: 4px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+        display: none;
+        min-width: 240px;
+        max-width: calc(100vw - 40px);
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
+      }
+      .menu.open {
+        display: block;
+      }
+      #menu a {
+        display: flex;
+        align-items: center;
+        margin: 0 0 4px 0;
+        padding: 6px 8px;
+        color: #333333;
+        text-decoration: none;
+        border-radius: 3px;
+        font-size: 13px;
+      }
+      #menu a:hover {
+        background-color: #f4f6f8;
+      }
+      #menu a.active {
+        background-color: rgba(56, 135, 190, 0.18);
+        font-weight: bold;
+      }
+      .category-label {
+        font-weight: bold;
+        font-size: 13px;
+        color: #222222;
+        margin-top: 8px;
+        margin-bottom: 5px;
+        padding-bottom: 3px;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .category-label:first-child {
+        margin-top: 0;
+      }
+      .color-indicator {
+        display: inline-block;
+        flex-shrink: 0;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 8px;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+      }
+      .color-indicator.line-indicator {
+        width: 16px;
+        height: 4px;
+        border-radius: 2px;
+        border: none;
+      }
+      .walk-info {
+        position: absolute;
+        bottom: 12px;
+        left: 10px;
+        z-index: 1;
+        background: rgba(255, 255, 255, 0.94);
+        padding: 8px 12px;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+        font-size: 13px;
+        color: #222222;
+        max-width: calc(100vw - 64px);
+        border-left: 5px solid #ff8c00;
+      }
+      @media (max-width: 640px) {
+        .walk-info {
+          bottom: 56px;
+          box-sizing: border-box;
+          max-width: calc(100vw - 20px);
+        }
+      }
+      .walk-info strong {
+        display: block;
+        margin-bottom: 2px;
+      }
+      .walk-info span {
+        color: #555555;
+        font-size: 12px;
+      }
+      .home-marker {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #1d3557;
+        border: 2.5px solid #ffffff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+      .maplibregl-popup {
+        max-width: 260px;
+      }
+      .maplibregl-popup-content {
+        text-align: center;
+        font-family: Arial, sans-serif;
+        padding: 10px 12px;
+        font-size: 13px;
+        line-height: 1.4;
+      }
+      .maplibregl-popup-content h3 {
+        margin: 0 0 6px 0;
+        font-size: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="menu-toggle" class="menu-toggle" title="Toggle layers &amp; walks">☰</div>
+    <div id="menu" class="menu"></div>
+    <div id="walk-info" class="walk-info"></div>
+
+    <script src="https://unpkg.com/maplibre-gl@^5.2.0/dist/maplibre-gl.js"></script>
+    <script>
+      var homeCoords = [-2.7734584, 51.4845699];
+
+      var map = new maplibregl.Map({
+        container: "map",
+        style: "https://tiles.openfreemap.org/styles/liberty",
+        center: [-2.769, 51.4885],
+        zoom: 14.3,
+        maxZoom: 18,
+        attributionControl: true,
+        preserveDrawingBuffer: false,
+        antialias: false
+      });
+
+      map.addControl(new maplibregl.NavigationControl(), "top-left");
+      map.addControl(
+        new maplibregl.GeolocateControl({
+          positionOptions: { enableHighAccuracy: true },
+          trackUserLocation: true
+        }),
+        "top-left"
+      );
+
+      const emptyImageData = new Uint8Array([0, 0, 0, 0]);
+      map.on("styleimagemissing", (e) => {
+        if (!map.hasImage(e.id)) {
+          map.addImage(e.id, { width: 1, height: 1, data: emptyImageData });
+        }
+      });
+
+      const walksConfig = [
+        {
+          id: "Walk1",
+          url: "Walk_1.geojson",
+          label: "Lake Grounds to Marina (5.3 km)",
+          color: "#FF8C00"
+        },
+        {
+          id: "Walk2",
+          url: "Walk_2.geojson",
+          label: "Portishead Marina Loop & Pier (4.4 km)",
+          color: "#6A0DAD"
+        },
+        {
+          id: "Walk3",
+          url: "Walk_3.geojson",
+          label: "Kilkenny Bay & Steps (2.7 km)",
+          color: "#007bff"
+        },
+        {
+          id: "Walk4",
+          url: "Walk_4.geojson",
+          label: "Portbury Wharf Reserve (7.7 km)",
+          color: "#2E8B57"
+        },
+        {
+          id: "Walk5",
+          url: "Walk_5.geojson",
+          label: "Marina via The Rhyne & Waitrose (4.0 km)",
+          color: "#C2185B"
+        }
+      ];
+
+      const poiConfig = [
+        {
+          id: "Places",
+          url: "Portishead_Places.geojson",
+          label: "Places & Landmarks",
+          color: "#00A896"
+        },
+        {
+          id: "Supermarkets",
+          url: "Portishead_Supermarkets.geojson",
+          label: "Supermarkets & Shops",
+          color: "#E63946"
+        },
+        {
+          id: "Medical",
+          url: "Portishead_Medical.geojson",
+          label: "Medical, Dental & Vet",
+          color: "#E09F3E"
+        }
+      ];
+
+      var markers = {
+        Places: [],
+        Supermarkets: [],
+        Medical: []
+      };
+
+      var walkDataCache = {};
+      var walkLinks = {};
+      var activeWalk = "Walk1";
+
+      function updateWalkInfoBanner(walkId) {
+        var box = document.getElementById("walk-info");
+        if (!walkId) {
+          box.style.display = "none";
+          return;
+        }
+        var cfg = walksConfig.find((w) => w.id === walkId);
+        var data = walkDataCache[walkId];
+        var props =
+          data && data.features && data.features[0]
+            ? data.features[0].properties
+            : null;
+        box.style.display = "block";
+        box.style.borderLeftColor = cfg.color;
+        if (props) {
+          box.innerHTML =
+            "<strong>" +
+            props.name +
+            "</strong><span>" +
+            props.distance_km +
+            " km &middot; ~" +
+            props.duration_min +
+            " min walk from 17 Avon Way</span>";
+        } else {
+          box.innerHTML = "<strong>" + cfg.label + "</strong>";
+        }
+      }
+
+      function fitToWalk(walkId) {
+        var data = walkDataCache[walkId];
+        if (!data || !data.features || !data.features[0]) return;
+        var coords = data.features[0].geometry.coordinates;
+        var bounds = new maplibregl.LngLatBounds();
+        coords.forEach((c) => bounds.extend(c));
+        map.fitBounds(bounds, { padding: 55, maxZoom: 16 });
+      }
+
+      async function addHomeMarker() {
+        const resp = await fetch("Portishead_Home.geojson");
+        const data = await resp.json();
+        const feature = data.features && data.features[0];
+        if (!feature) return;
+
+        homeCoords = feature.geometry.coordinates;
+        var name = feature.properties.Name || "17 Avon Way (Home)";
+        var desc = feature.properties.description || "";
+
+        var homeEl = document.createElement("div");
+        homeEl.className = "home-marker";
+        homeEl.title = name;
+        homeEl.innerHTML =
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true">' +
+          '<path d="M12 3l9 8h-3v9h-5v-6h-2v6H6v-9H3l9-8z"/></svg>';
+
+        var homePopup = new maplibregl.Popup({ offset: [0, -14] }).setHTML(
+          "<h3>" + name + "</h3>" + (desc ? "<div>" + desc + "</div>" : "")
+        );
+
+        new maplibregl.Marker({ element: homeEl, anchor: "center" })
+          .setLngLat(homeCoords)
+          .setPopup(homePopup)
+          .addTo(map);
+      }
+
+      async function addWalkLayer(cfg, initialVisibility) {
+        const resp = await fetch(cfg.url);
+        const geojson = await resp.json();
+        walkDataCache[cfg.id] = geojson;
+
+        map.addSource(cfg.id, {
+          type: "geojson",
+          data: geojson
+        });
+
+        map.addLayer({
+          id: cfg.id,
+          type: "line",
+          source: cfg.id,
+          layout: {
+            visibility: initialVisibility,
+            "line-join": "round",
+            "line-cap": "round"
+          },
+          paint: {
+            "line-color": cfg.color,
+            "line-width": 3.5,
+            "line-dasharray": [2, 1]
+          }
+        });
+
+        map.addLayer({
+          id: cfg.id + "-arrows",
+          type: "symbol",
+          source: cfg.id,
+          layout: {
+            visibility: initialVisibility,
+            "symbol-placement": "line",
+            "symbol-spacing": 80,
+            "icon-image": "patharrow",
+            "icon-size": 1.2,
+            "icon-offset": [0, -1],
+            "icon-rotate": 90
+          },
+          paint: {
+            "icon-color": cfg.color
+          }
+        });
+
+        map.on("click", cfg.id, (e) => {
+          var props = e.features[0].properties;
+          new maplibregl.Popup()
+            .setLngLat(e.lngLat)
+            .setHTML(
+              "<h3>" +
+                props.name +
+                "</h3><div><strong>" +
+                props.distance_km +
+                " km (~" +
+                props.duration_min +
+                " min)</strong><br>" +
+                props.description +
+                "</div>"
+            )
+            .addTo(map);
+        });
+
+        map.on("mouseenter", cfg.id, () => {
+          map.getCanvas().style.cursor = "pointer";
+        });
+        map.on("mouseleave", cfg.id, () => {
+          map.getCanvas().style.cursor = "";
+        });
+
+        if (cfg.id === activeWalk) {
+          updateWalkInfoBanner(activeWalk);
+        }
+      }
+
+      function loadMarkers(cfg) {
+        fetch(cfg.url)
+          .then((response) => response.json())
+          .then((data) => {
+            data.features.forEach(function (feature) {
+              var name =
+                feature.properties.name ||
+                feature.properties.Name ||
+                "Unnamed Location";
+              var desc = feature.properties.description || "";
+              var popup = new maplibregl.Popup({ offset: [0, -10] }).setHTML(
+                "<h3>" + name + "</h3>" + (desc ? "<div>" + desc + "</div>" : "")
+              );
+
+              var marker = new maplibregl.Marker({ color: cfg.color })
+                .setLngLat(feature.geometry.coordinates)
+                .setPopup(popup)
+                .addTo(map);
+
+              markers[cfg.id].push(marker);
+            });
+          })
+          .catch((error) => console.error("Error loading " + cfg.id + ": ", error));
+      }
+
+      function selectWalk(id) {
+        if (activeWalk && walkLinks[activeWalk]) {
+          map.setLayoutProperty(activeWalk, "visibility", "none");
+          map.setLayoutProperty(activeWalk + "-arrows", "visibility", "none");
+          walkLinks[activeWalk].className = "";
+        }
+
+        if (id === activeWalk || id === "none") {
+          if (id === activeWalk && id !== "none") {
+            // Re-enable and zoom to the walk if clicked while already active
+            map.setLayoutProperty(id, "visibility", "visible");
+            map.setLayoutProperty(id + "-arrows", "visibility", "visible");
+            walkLinks[id].className = "active";
+            fitToWalk(id);
+            return;
+          }
+          activeWalk = null;
+          walkLinks["none"].className = "active";
+          updateWalkInfoBanner(null);
+          return;
+        }
+
+        activeWalk = id;
+        map.setLayoutProperty(id, "visibility", "visible");
+        map.setLayoutProperty(id + "-arrows", "visibility", "visible");
+        walkLinks[id].className = "active";
+        updateWalkInfoBanner(id);
+        fitToWalk(id);
+      }
+
+      map.on("load", async () => {
+        const patharrow = await map.loadImage("patharrow.png");
+        map.addImage("patharrow", patharrow.data, { sdf: true });
+
+        await addHomeMarker();
+
+        await Promise.all(
+          walksConfig.map((cfg) =>
+            addWalkLayer(cfg, cfg.id === activeWalk ? "visible" : "none")
+          )
+        );
+
+        poiConfig.forEach((cfg) => loadMarkers(cfg));
+
+        var layersList = document.getElementById("menu");
+
+        var walksLabel = document.createElement("div");
+        walksLabel.className = "category-label";
+        walksLabel.textContent = "Walks (Select One)";
+        layersList.appendChild(walksLabel);
+
+        walksConfig.forEach(function (cfg) {
+          var link = document.createElement("a");
+          link.href = "#";
+          link.className = cfg.id === activeWalk ? "active" : "";
+
+          var indicator = document.createElement("span");
+          indicator.className = "color-indicator line-indicator";
+          indicator.style.backgroundColor = cfg.color;
+          link.appendChild(indicator);
+
+          var textSpan = document.createElement("span");
+          textSpan.textContent = cfg.label;
+          link.appendChild(textSpan);
+
+          walkLinks[cfg.id] = link;
+
+          link.onclick = function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            selectWalk(cfg.id);
+          };
+          layersList.appendChild(link);
+        });
+
+        var noneLink = document.createElement("a");
+        noneLink.href = "#";
+        var noneIndicator = document.createElement("span");
+        noneIndicator.className = "color-indicator line-indicator";
+        noneIndicator.style.backgroundColor = "#cccccc";
+        noneLink.appendChild(noneIndicator);
+        var noneText = document.createElement("span");
+        noneText.textContent = "Hide Walk";
+        noneLink.appendChild(noneText);
+        walkLinks["none"] = noneLink;
+        noneLink.onclick = function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          selectWalk("none");
+        };
+        layersList.appendChild(noneLink);
+
+        var poiLabel = document.createElement("div");
+        poiLabel.className = "category-label";
+        poiLabel.textContent = "Points of Interest";
+        layersList.appendChild(poiLabel);
+
+        poiConfig.forEach(function (cfg) {
+          var link = document.createElement("a");
+          link.href = "#";
+          link.className = "active";
+
+          var colorIndicator = document.createElement("span");
+          colorIndicator.className = "color-indicator";
+          colorIndicator.style.backgroundColor = cfg.color;
+          link.appendChild(colorIndicator);
+
+          var textSpan = document.createElement("span");
+          textSpan.textContent = cfg.label;
+          link.appendChild(textSpan);
+
+          link.onclick = function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var list = markers[cfg.id];
+            var visible = list[0] && list[0].getElement().style.display !== "none";
+            for (var i = 0; i < list.length; i++) {
+              list[i].getElement().style.display = visible ? "none" : "block";
+            }
+            link.className = visible ? "" : "active";
+          };
+          layersList.appendChild(link);
+        });
+
+        var homeLink = document.createElement("a");
+        homeLink.href = "#";
+        homeLink.style.marginTop = "6px";
+        homeLink.style.borderTop = "1px solid #e5e7eb";
+        homeLink.style.paddingTop = "8px";
+        var homeIndicator = document.createElement("span");
+        homeIndicator.className = "color-indicator";
+        homeIndicator.style.backgroundColor = "#1d3557";
+        homeLink.appendChild(homeIndicator);
+        var homeText = document.createElement("span");
+        homeText.textContent = "Centre on 17 Avon Way";
+        homeLink.appendChild(homeText);
+        homeLink.onclick = function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          map.flyTo({ center: homeCoords, zoom: 15.5 });
+        };
+        layersList.appendChild(homeLink);
+
+        fitToWalk(activeWalk);
+      });
+
+      document
+        .getElementById("menu-toggle")
+        .addEventListener("click", function () {
+          document.getElementById("menu").classList.toggle("open");
+        });
+    </script>
+  </body>
+</html>

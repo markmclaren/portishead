@@ -1,0 +1,106 @@
+{
+  "type": "FeatureCollection",
+  "name": "Portishead Supermarkets & Shops",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Tesco Express",
+        "description": "Local convenience store at the top of the hill (60 West Hill, BS20 6LR)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7817033, 51.4823165]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Co-op Food (West Hill)",
+        "description": "Local convenience store at the top of the hill (109–111 Avon Way, BS20 6LT)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7813385, 51.4814405]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Costcutter",
+        "description": "Local convenience store on the High Street (50 High Street, BS20 6EL)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7690266, 51.4838033]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Waitrose",
+        "description": "Supermarket on Harbour Road / Marina (BS20 7DE)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7657448, 51.485937]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Lidl",
+        "description": "Supermarket on Harbour Road (BS20 7DE). Ray & Nori's cat litter is from Lidl."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7634858, 51.4860017]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Aldi",
+        "description": "Supermarket on Wyndham Way (BS20 8LR)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7665455, 51.4835562]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Sainsbury's",
+        "description": "Supermarket on Serbert Way (BS20 7GD)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7611812, 51.4840434]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "B&M Home Store",
+        "description": "Homeware & essentials store on Wyndham Way (BS20 6PP)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.764673, 51.4834634]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Home Bargains",
+        "description": "Discount store off Harbour Road (Mustard Way, BS20 7DE)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7624346, 51.4855822]
+      }
+    }
+  ]
+}
+

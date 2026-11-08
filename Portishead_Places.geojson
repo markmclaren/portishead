@@ -1,0 +1,139 @@
+{
+  "type": "FeatureCollection",
+  "name": "Portishead Places",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Downside Bus Stop (X4)",
+        "description": "Nearest stop for the X4 bus between Portishead and Bristol city centre (approx. every 10 mins, ~45 min journey)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7725833, 51.4846484]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "The Royal Inn",
+        "description": "Waterfront pub on Pier Road (BS20 7HG), next to Eastwood Local Nature Reserve."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7580325, 51.4942752]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "The Windmill",
+        "description": "Pub at 58 Nore Road (BS20 6JZ) overlooking Kilkenny Bay, near Fisherman's Steps."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7818145, 51.4865885]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Mokoko Coffee & Bakery",
+        "description": "Coffee & bakery on Portishead Marina (311–313 Newfoundland Way, BS20 7QH)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7577602, 51.4913851]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "SeaRock Fish & Chips",
+        "description": "Seafood restaurant and fish & chip takeaway on Portishead Marina (Sixty8 at the Marina, 313A Newfoundland Way, BS20 7QH), next to Mokoko."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7575566, 51.4912844]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Portishead Quays Marina",
+        "description": "Scenic marina with waterside boardwalks, lock bridge, cafes, and views across the estuary."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7591658, 51.4904881]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Portishead Marina Lock",
+        "description": "Tidal lock connecting Portishead Quays Marina to the Severn Estuary, with a pedestrian footbridge across the lock gates."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7576503, 51.4919258]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Battery Point Lighthouse",
+        "description": "Historic coastal lighthouse at Battery Point (Portishead Point) overlooking the Bristol Channel, between the Lake Grounds and Eastwood Reserve."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.773616, 51.4946113]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Victorian Lake Grounds",
+        "description": "Boating lake, parkland, and seafront promenade linking towards Battery Point and Eastwood Reserve."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.773285, 51.4885867]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Eastwood Local Nature Reserve",
+        "description": "Woodland and coastal trails linking the Victorian Lake Grounds and Battery Point to Portishead Marina."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7647087, 51.4942232]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Fisherman's Steps (Kilkenny Bay)",
+        "description": "Steps down to the water's edge at Kilkenny Bay along Mariners Path, near The Windmill."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.782753, 51.4873029]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Portbury Wharf Nature Reserve",
+        "description": "Coastal wetland nature reserve with bird hides (Tower Hide, North Pool Hide, and South Pool Hide)."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.7433684, 51.4914067]
+      }
+    }
+  ]
+}
+
